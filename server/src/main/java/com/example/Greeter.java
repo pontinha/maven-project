@@ -13,8 +13,8 @@ public class Greeter {
   }
 
   /**
-   * A javadoc comment
-   * @parameter someone a name
+   * A javadoc comment.
+   * @param someone a name
    * @return a greeting
    */
   public final String greet(final String someone) {
