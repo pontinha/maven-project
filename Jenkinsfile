@@ -9,15 +9,8 @@ pipeline {
             post {
                 success {
                     echo 'Now archiving...'
-
+                    archiveArtifacts artifacts: '**/target/*.war'
                 }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Code deployed.'
-                archiveArtifacts artifacts: '**/target/*.war'
             }
         }
     }
