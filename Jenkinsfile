@@ -29,15 +29,10 @@ pipeline {
                 stage('Deploy to staging') {
                     steps {
                         sh """
-                            CURL_RESPONSE=\$(curl -v -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/\$CONTEXT_NAME&update=true\")    
+                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/&update=true\")    
+                            echo "\$CURL_RESPONSE"
                             
-                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
-                              echo "war deployment failed"
-                              exit 1
-                            else    
-                              echo "war deployed successfully "
-                              exit 0
-                            fi
+                            [[ \$CURL_RESPONSE == *"FAIL"* ]] && exit 1
                         """
 //                        sh "curl 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
 //                        node('Deploy') {
@@ -50,7 +45,12 @@ pipeline {
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh "curl --upload-file **/target/*.war 'http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?update=true'"
+                        sh """
+                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_prod}/manager/text/deploy?path=/&update=true\")    
+                            echo "\$CURL_RESPONSE"
+                            
+                            [[ \$CURL_RESPONSE == *"FAIL"* ]] && exit 1
+                        """
                     }
                 }
             }
