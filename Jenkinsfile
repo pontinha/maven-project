@@ -28,6 +28,7 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
+                        sh 'echo $(pwd)'
                         sh "curl 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
 //                        node('Deploy') {
 //                            withCredentials([usernameColonPassword(credentialsId: 'jenkins', variable: 'PASSWORD')]) {
