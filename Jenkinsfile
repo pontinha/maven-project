@@ -32,7 +32,11 @@ pipeline {
                             CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/&update=true\")    
                             echo "\$CURL_RESPONSE"
                             
-                            [[ \$CURL_RESPONSE == *"FAIL"* ]] && exit 1
+                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
+                              exit 1
+                            else    
+                              exit 0
+                            fi
                         """
 //                        sh "curl 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
 //                        node('Deploy') {
@@ -49,7 +53,11 @@ pipeline {
                             CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_prod}/manager/text/deploy?path=/&update=true\")    
                             echo "\$CURL_RESPONSE"
                             
-                            [[ \$CURL_RESPONSE == *"FAIL"* ]] && exit 1
+                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
+                              exit 1
+                            else    
+                              exit 0
+                            fi
                         """
                     }
                 }
