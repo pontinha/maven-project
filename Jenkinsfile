@@ -25,8 +25,8 @@ pipeline {
         }
 
         stage('Deployments') {
-            parallel {
-                stage('Deploy to staging') {
+//            parallel {
+//                stage('Deploy to staging') {
                     steps {
                         sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps/"
 //                        sh """
@@ -46,10 +46,10 @@ pipeline {
 //                                sh "curl --upload-file **/target/*.war 'http://jenkins:$PASSWORD:${params.tomcat_stag}/manager/text/deploy?update=true'"
 //                            }
 //                        }
-                    }
-                }
-                stage('Deploy to production') {
-                    steps {
+//                    }
+//                }
+//                stage('Deploy to production') {
+//                    steps {
                         sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps/"
 //                        sh """
 //                            CURL_RESPONSE=\$(curl \"http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?war=file:**/target/*.war&update=true\")
