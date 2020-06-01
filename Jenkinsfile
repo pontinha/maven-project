@@ -50,6 +50,7 @@ pipeline {
                 }
                 stage('Deploy to production') {
                     steps {
+                        sh 'whoami'
                         sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps/"
 //                        sh """
 //                            CURL_RESPONSE=\$(curl \"http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?war=file:**/target/*.war&update=true\")
