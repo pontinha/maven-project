@@ -28,7 +28,7 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh "curl --upload-file **/target/*.war 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
+                        sh "curl 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
 //                        node('Deploy') {
 //                            withCredentials([usernameColonPassword(credentialsId: 'jenkins', variable: 'PASSWORD')]) {
 ////                                sh "curl -v -u jenkins:$PASSWORD -T **/target/*.war 'http://${params.tomcat_stag}/manager/text/deploy?war=/$CONTEX_NAME&update=true'"
@@ -39,7 +39,7 @@ pipeline {
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh "curl --upload-file **/target/*.war 'http://jenkins:jenkins@${params.tomcat_prd}/manager/text/deploy?update=true'"
+                        sh "curl --upload-file **/target/*.war 'http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?update=true'"
                     }
                 }
             }
