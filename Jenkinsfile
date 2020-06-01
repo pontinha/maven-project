@@ -28,16 +28,17 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh """
-                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/&update=true\")    
-                            echo "\$CURL_RESPONSE"
-                            
-                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
-                              exit 1
-                            else
-                              exit 0
-                            fi
-                        """
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps/"
+//                        sh """
+//                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/&update=true\")
+//                            echo "\$CURL_RESPONSE"
+//
+//                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
+//                              exit 1
+//                            else
+//                              exit 0
+//                            fi
+//                        """
 //                        sh "curl 'http://jenkins:jenkins@${params.tomcat_stag}/manager/text/deploy?war=file:**/target/*.war&update=true'"
 //                        node('Deploy') {
 //                            withCredentials([usernameColonPassword(credentialsId: 'jenkins', variable: 'PASSWORD')]) {
