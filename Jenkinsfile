@@ -28,12 +28,13 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps"
+//                        sh "curl -v -u $TOMCAT_USER:$TOMCAT_PASSWORD -T **/target/*.war 'http://${params.tomcat_stag}/manager/text/deploy?path=/$CONTEX_NAME&update=true'"
+                        sh "cp **/target/*.war ${params.instances_dir}/1/webapps"
                     }
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps"
+                        sh "cp **/target/*.war ${params.instances_dir}/2/webapps"
                     }
                 }
             }
