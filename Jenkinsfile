@@ -3,8 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
-        string(name: 'tomcat_stag', defaultValue: 'localhost:8081', description: 'Staging server')
-        string(name: 'tomcat_prod', defaultValue: 'localhost:8082', description: 'Production server')
+        string(name: 'tomcat_stag', defaultValue: '1', description: 'Staging server')
+        string(name: 'tomcat_prod', defaultValue: '2', description: 'Production server')
     }
 
     triggers {
