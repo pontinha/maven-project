@@ -28,7 +28,6 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh "ls -la ${params.instances_dir}/${params.tomcat_stag}"
                         sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps/"
 //                        sh """
 //                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_stag}/manager/text/deploy?path=/&update=true\")
