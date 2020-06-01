@@ -203,7 +203,7 @@ contributor(closures) {
         method(name: 'withDockerContainer', type: 'Object', params: [body: Closure], namedParams: [parameter(name: 'image', type: 'java.lang.String'), parameter(name: 'args', type: 'java.lang.String'), parameter(name: 'toolName', type: 'java.lang.String'),], doc: 'Run build steps inside a Docker container')
         method(name: 'withDockerRegistry', type: 'Object', params: [registry: Map, body: 'Closure'], doc: 'Advanced/Deprecated Sets up Docker registry endpoint')
         method(name: 'withDockerServer', type: 'Object', params: [server: Map, body: 'Closure'], doc: 'Advanced/Deprecated Sets up Docker server endpoint')
-        method(name: 'parallel', type: 'Object', params: [body: 'Map'], doc: 'Run taask in parallel')
+        method(name: 'parallel', type: 'Object', params: [body: 'Map'], doc: 'Run tasks in parallel')
     }
 
     // Post actions!
