@@ -28,22 +28,12 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh """
-                            whoami
-                            ls -l **/target/*.war
-                            cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps/
-                            ls -l ${params.instances_dir}/${params.tomcat_stag}/webapps/*.war
-                        """
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps/"
                     }
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh """
-                            whoami
-                            ls -l **/target/*.war
-                            cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps/
-                            ls -l ${params.instances_dir}/${params.tomcat_prod}/webapps/*.war
-                        """
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps/"
                     }
                 }
             }
