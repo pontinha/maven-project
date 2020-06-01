@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-//        string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
+        string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
         string(name: 'tomcat_stag', defaultValue: 'localhost:8081', description: 'Staging server')
         string(name: 'tomcat_prod', defaultValue: 'localhost:8082', description: 'Production server')
     }
@@ -49,16 +49,17 @@ pipeline {
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh """
-                            CURL_RESPONSE=\$(curl \"http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?war=file:**/target/*.war&update=true\")    
-                            echo "\$CURL_RESPONSE"
-                            
-                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
-                              exit 1
-                            else
-                              exit 0
-                            fi
-                        """
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps/"
+//                        sh """
+//                            CURL_RESPONSE=\$(curl \"http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?war=file:**/target/*.war&update=true\")
+//                            echo "\$CURL_RESPONSE"
+//
+//                            if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
+//                              exit 1
+//                            else
+//                              exit 0
+//                            fi
+//                        """
                     }
                 }
             }
