@@ -34,7 +34,7 @@ pipeline {
                             
                             if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
                               exit 1
-                            else    
+                            else
                               exit 0
                             fi
                         """
@@ -50,12 +50,12 @@ pipeline {
                 stage('Deploy to production') {
                     steps {
                         sh """
-                            CURL_RESPONSE=\$(curl -u jenkins:jenkins -T **/target/*.war \"http://${params.tomcat_prod}/manager/text/deploy?path=/&update=true\")    
+                            CURL_RESPONSE=\$(curl -T **/target/*.war \"http://jenkins:jenkins@${params.tomcat_prod}/manager/text/deploy?path=/&update=true\")    
                             echo "\$CURL_RESPONSE"
                             
                             if [[ \$CURL_RESPONSE == *"FAIL"* ]]; then
                               exit 1
-                            else    
+                            else
                               exit 0
                             fi
                         """
