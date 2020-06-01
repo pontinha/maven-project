@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'tomcat_stag', defaultValue: 'localhost:8081', description: 'Staging server')
-        string(name: 'tomcat_prod', defaultValue: 'localhost:8082', description: 'Production server')
+        string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
+        string(name: 'tomcat_stag', defaultValue: '1', description: 'Staging server')
+        string(name: 'tomcat_prod', defaultValue: '2', description: 'Production server')
     }
 
     triggers {
@@ -27,12 +28,12 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-                        sh "cp **/target/*.war ${params.tomcat_stag}:/home/pontinha/Development/tools/tomcat/instances/1/webapps"
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_stag}/webapps"
                     }
                 }
                 stage('Deploy to production') {
                     steps {
-                        sh "cp **/target/*.war ${params.tomcat_prod}:/home/pontinha/Development/tools/tomcat/instances/1/webapps"
+                        sh "cp **/target/*.war ${params.instances_dir}/${params.tomcat_prod}/webapps"
                     }
                 }
             }
