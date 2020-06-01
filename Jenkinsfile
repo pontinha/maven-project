@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
-        string(name: 'tomcat_stag', defaultValue: '1', description: 'Staging server')
-        string(name: 'tomcat_prod', defaultValue: '2', description: 'Production server')
+//        string(name: 'instances_dir', defaultValue: '/home/pontinha/Development/tools/tomcat/instances', description: 'Instances directory')
+        string(name: 'tomcat_stag', defaultValue: 'localhost:8081', description: 'Staging server')
+        string(name: 'tomcat_prod', defaultValue: 'localhost:8082', description: 'Production server')
     }
 
     triggers {
@@ -28,8 +28,12 @@ pipeline {
             parallel {
                 stage('Deploy to staging') {
                     steps {
-//                        sh "curl -v -u $TOMCAT_USER:$TOMCAT_PASSWORD -T **/target/*.war 'http://${params.tomcat_stag}/manager/text/deploy?path=/$CONTEX_NAME&update=true'"
-                        sh "cp **/target/*.war ${params.instances_dir}/1/webapps"
+                        node {
+                            withCredentials([usernameColonPassword(credentialsId: 'jenkins', variable: 'PASSWORD')]) {
+//                                sh "curl -v -u jenkins:$PASSWORD -T **/target/*.war 'http://${params.tomcat_stag}/manager/text/deploy?war=/$CONTEX_NAME&update=true'"
+                                sh "curl --upload-file **/target/*.war 'http://jenkins:$PASSWORD:${params.tomcat_stag}/manager/text/deploy?update=true'"
+                            }
+                        }
                     }
                 }
                 stage('Deploy to production') {
